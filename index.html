@@ -2,21 +2,21 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estaciones ADIF</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salidas de trenes ADIF</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Salidas de trenes ADIF</h1>
+    <h1>Consulta de salidas de trenes</h1>
     <div class="search-bar">
-      <input type="text" id="stationInput" placeholder="Introduce nombre o código de estación..." />
-      <button id="searchButton">Buscar</button>
+      <input type="text" id="searchInput" placeholder="Nombre o código de estación" autocomplete="off" />
       <div id="suggestions" class="suggestions"></div>
+      <button onclick="buscarEstacion()">Buscar</button>
     </div>
-    <div id="warning" class="warning" style="display: none;">⚠️ ADIF no proporciona datos para esta estación.</div>
-    <iframe id="infoFrame" src="" frameborder="0"></iframe>
+    <iframe id="infoFrame" src="https://info.adif.es/?s=65300"></iframe>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
