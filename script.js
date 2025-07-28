@@ -12,10 +12,23 @@ searchInput.addEventListener("input", () => {
 
   if (!query) return;
 
-  // Filtra las estaciones que contienen el texto buscado
   const matches = Stations.filter(st =>
     st.name.toLowerCase().includes(query) || st.code.includes(query)
   );
+
+  matches.forEach(station => {
+    const option = document.createElement("div");
+    option.textContent = `${station.name} (${station.code})`;
+
+    option.onclick = () => {
+      searchInput.value = station.code;
+      suggestionsBox.innerHTML = "";
+      buscarEstacion();
+    };
+
+    suggestionsBox.appendChild(option);
+  });
+});
 
   // Muestra sugerencias debajo del input
   matches.forEach(station => {
@@ -39,12 +52,11 @@ document.addEventListener("click", (e) => {
 });
 
 function buscarEstacion() {
-  const input = searchInput.value.toLowerCase().trim();
+  const input = searchInput.value.trim();
   suggestionsBox.innerHTML = "";
 
-  // Encuentra la estación por nombre exacto o código
   const station = Stations.find(st =>
-    st.name.toLowerCase() === input || st.code === input
+    st.code === input || st.name.toLowerCase() === input.toLowerCase()
   );
 
   if (!station) {
@@ -58,6 +70,12 @@ function buscarEstacion() {
     mostrarAviso("ADIF no proporciona datos para esta estación.");
     return;
   }
+
+  ocultarAviso();
+  iframe.src = `https://info.adif.es/?s=${code}`;
+  iframe.style.display = "block";
+}
+
 
   // Si todo está correcto, carga el iframe
   ocultarAviso();
