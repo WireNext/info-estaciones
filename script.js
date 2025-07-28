@@ -1,14 +1,14 @@
 const estaciones = {
   "Castelló": "65300",
-  "València Nord": "65302",
+  "València Nord": "65000",
+  "València Joaquín Sorolla": "03216",
   "Madrid Chamartín": "01000",
   "Madrid Puerta de Atocha": "00100",
   "Barcelona Sants": "71700",
-  "Sevilla Santa Justa": "01030",
-  "Alicante": "60900",
-  "Bilbao Abando": "12200",
-  "Zaragoza Delicias": "78100",
-  "Málaga María Zambrano": "50000"
+  "Sevilla Santa Justa": "51003",
+  "Bilbao-Abando Indalecio Prieto": "13200",
+  "Zaragoza Goya": "70807",
+  "Málaga María Zambrano": "54413"
 };
 
 const searchInput = document.getElementById("searchInput");
