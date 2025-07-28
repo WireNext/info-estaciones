@@ -1,18 +1,9 @@
-const estaciones = {
-  "Castelló": "65300",
-  "València Nord": "65000",
-  "València Joaquín Sorolla": "03216",
-  "Madrid Chamartín": "01000",
-  "Madrid Puerta de Atocha": "00100",
-  "Barcelona Sants": "71700",
-  "Sevilla Santa Justa": "51003",
-  "Bilbao-Abando Indalecio Prieto": "13200",
-  "Zaragoza Goya": "70807",
-  "Málaga María Zambrano": "54413"
-};
+import { Stations } from './stations.js';
 
 const searchInput = document.getElementById("searchInput");
 const suggestionsBox = document.getElementById("suggestions");
+const iframe = document.getElementById("infoFrame");
+const warningBanner = document.getElementById("warningBanner");
 
 searchInput.addEventListener("input", () => {
   const query = searchInput.value.toLowerCase();
@@ -20,15 +11,15 @@ searchInput.addEventListener("input", () => {
 
   if (!query) return;
 
-  const matches = Object.keys(estaciones).filter(name =>
-    name.toLowerCase().includes(query)
+  const matches = Stations.filter(st =>
+    st.name.toLowerCase().includes(query) || st.code.includes(query)
   );
 
-  matches.forEach(name => {
+  matches.forEach(station => {
     const div = document.createElement("div");
-    div.textContent = name;
+    div.textContent = `${station.name} (${station.code})`;
     div.onclick = () => {
-      searchInput.value = name;
+      searchInput.value = station.name;
       suggestionsBox.innerHTML = "";
       buscarEstacion();
     };
@@ -43,18 +34,25 @@ document.addEventListener("click", (e) => {
 });
 
 function buscarEstacion() {
-  const input = searchInput.value.trim();
-  const iframe = document.getElementById("infoFrame");
+  const input = searchInput.value.trim().toLowerCase();
+  let foundStation = Stations.find(st =>
+    st.name.toLowerCase() === input || st.code === input
+  );
 
-  if (!input) return;
+  if (!foundStation) {
+    warningBanner.className = "visible";
+    iframe.style.display = "none";
+    return;
+  }
 
-  if (!isNaN(input)) {
-    // Si es un número (código)
-    iframe.src = `https://info.adif.es/?s=${input}`;
-  } else if (estaciones[input]) {
-    // Si coincide con el nombre
-    iframe.src = `https://info.adif.es/?s=${estaciones[input]}`;
+  const { code, location } = foundStation;
+
+  if (location.lat == null || location.lon == null) {
+    warningBanner.className = "visible";
+    iframe.style.display = "none";
   } else {
-    alert("Estación no encontrada.");
+    warningBanner.className = "hidden";
+    iframe.src = `https://info.adif.es/?s=${code}`;
+    iframe.style.display = "block";
   }
 }
