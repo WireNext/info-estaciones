@@ -4,15 +4,13 @@ const searchInput = document.getElementById("stationInput");
 const searchButton = document.getElementById("searchButton");
 const suggestionsContainer = document.getElementById("suggestions");
 const warning = document.getElementById("warning");
-// Eliminamos la referencia a infoFrame ya que no lo usaremos
-// const infoFrame = document.getElementById("infoFrame"); 
 
 // Cargar estaciones desde JSON externo
 fetch("stations.json")
   .then((res) => res.json())
   .then((data) => {
     Stations = data;
-    enableSearch(); // Solo habilita la búsqueda cuando ya se cargó el JSON
+    enableSearch();
   })
   .catch((err) => {
     console.error("Error al cargar estaciones:", err);
@@ -27,8 +25,9 @@ function enableSearch() {
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase().trim();
     suggestionsContainer.innerHTML = "";
-    warning.style.display = "none"; // Ocultar advertencia al escribir
-    if (!query) return;
+    warning.style.display = "none";
+
+    if (query.length < 3) return; // Muestra sugerencias solo si se escriben al menos 3 caracteres
 
     const filteredStations = Stations.filter((station) =>
       station.name.toLowerCase().includes(query) || station.code.includes(query)
@@ -50,6 +49,13 @@ function enableSearch() {
   searchButton.addEventListener("click", () => {
     searchStation(searchInput.value);
   });
+
+  // Oculta las sugerencias si el usuario hace clic fuera de la barra de búsqueda
+  document.addEventListener("click", (e) => {
+    if (!suggestionsContainer.contains(e.target) && e.target !== searchInput) {
+      suggestionsContainer.innerHTML = "";
+    }
+  });
 }
 
 function searchStation(inputValue) {
@@ -61,11 +67,9 @@ function searchStation(inputValue) {
 
   if (station && station.code) {
     const url = `https://info.adif.es/?s=${station.code}`;
-    // Aquí es donde cambiamos la lógica: abrimos la URL en una nueva pestaña
     window.open(url, "_blank");
     warning.style.display = "none";
   } else {
-    // Si no tiene código o no se encuentra la estación
     warning.textContent = "No se ha encontrado ninguna estación válida para esta búsqueda.";
     warning.style.display = "block";
   }
