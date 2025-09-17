@@ -1,15 +1,16 @@
-/* Reset básico */
+/* Fuente moderna */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
-  background: #f5f5f5;
-  color: #333;
-  line-height: 1.5;
+  background-color: #121212;
+  color: #e0e0e0;
   padding: 2rem;
 }
 
@@ -20,11 +21,13 @@ header {
 
 header h1 {
   font-size: 2rem;
+  font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
 header p {
-  color: #666;
+  color: #aaa;
+  font-weight: 400;
 }
 
 main {
@@ -33,55 +36,91 @@ main {
   align-items: center;
 }
 
-/* Buscador */
+/* Buscador oscuro */
 .search-wrapper {
   position: relative;
   max-width: 600px;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 #buscador {
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px 16px;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: all 0.2s ease;
 }
 
-/* Dropdown de sugerencias */
+#buscador::placeholder {
+  color: #888;
+}
+
+#buscador:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #4f8ef7;
+}
+
+/* Dropdown oscuro */
 .dropdown {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
   right: 0;
-  background: white;
-  border: 1px solid #ccc;
-  max-height: 240px;
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  max-height: 250px;
   overflow-y: auto;
   z-index: 1000;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.7);
 }
 
 .dropdown div {
-  padding: 8px 12px;
+  padding: 10px 14px;
   cursor: pointer;
+  transition: background 0.2s;
+  color: #e0e0e0;
 }
 
 .dropdown div:hover,
 .dropdown div.selected {
-  background: #f0f0f0;
+  background-color: #333333;
 }
 
 /* Visor de pantalla */
 #visor {
   width: 100%;
   max-width: 800px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.7);
+  background-color: #1f1f1f;
+}
+
+#titulo-estacion {
+  padding: 12px 16px;
+  font-weight: 500;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #333;
+  color: #f0f0f0;
+  background-color: #2a2a2a;
 }
 
 #visor iframe {
   width: 100%;
   height: 500px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: none;
+  background-color: #000;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.5rem; }
+  #buscador { font-size: 0.95rem; padding: 10px 12px; }
+  #visor iframe { height: 400px; }
 }
