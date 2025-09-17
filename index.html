@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pantallas ADIF</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Pantallas de Estaciones ADIF</h1>
+    <p>Busca tu estación y consulta su pantalla en tiempo real.</p>
+  </header>
+
+  <main>
+    <div class="search-wrapper">
+      <input type="text" id="buscador" placeholder="Buscar estación..." autocomplete="off" />
+      <div id="sugerencias" class="dropdown" role="listbox"></div>
+    </div>
+
+    <div id="visor">
+      <iframe id="pantalla" src="" frameborder="0"></iframe>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
